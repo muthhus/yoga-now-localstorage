@@ -2,10 +2,10 @@ var ListView = function(el){
     this.el = $(el);
 }; 
 
-ListView.prototype.refreshList = function(studios){     
+ListView.prototype.refreshList = function(items){     
     this.el.html('');
     this.el.hide();
-    this.addItems(studios);
+    this.addItems(item);
     this.el.fadeIn('slow');
 };
 
@@ -15,10 +15,8 @@ ListView.prototype.addItems = function(items) {
     },this));  
 };
 
-ListView.prototype.addItem = function(item){
-    if (item.title) {
-        this.el.append($("<li/>").html(item.title));
-    }
+ListView.prototype.addItem = function(item){    
+    this.el.append($("<li/>").html(item.title));
 }
 
 var App = (function(){
@@ -28,6 +26,10 @@ var App = (function(){
         studiosListView = new ListView(".main ul");
         bindEvents();
         populateStudiosList(getStudiosFromLocalStorage());
+
+        this.getStudios = getStudiosFromLocalStorage;
+        this.sync = sync;
+        this.clear = clear;            
     }
 
     function bindEvents() {
@@ -36,7 +38,7 @@ var App = (function(){
     }
 
     function populateStudiosList(studios) {
-        studiosListView.refreshList( studios );
+        studiosListView.refreshList(studios);
     }
     
     function getStudiosFromLocalStorage() {
@@ -44,31 +46,28 @@ var App = (function(){
     }
 
     function clear() {
-        resetDb();
+        resetLocalStorage();
         populateStudiosList(getStudiosFromLocalStorage());
     }
 
     function sync() { 
         var url = "http://yoga-now-api.herokuapp.com/studios.json"
         $.getJSON(url, function(studios){       
-            addStudiosToLocalStorage(studios);
+            storeStudiosInLocalStorage(studios);
             populateStudiosList(studios);
         }); 
     }
 
-    function resetDb() {
+    function resetLocalStorage() {
         db.setItem("studios", JSON.stringify({ studios: [] }));
     }
 
-    function addStudiosToLocalStorage(studios) {
+    function storeStudiosInLocalStorage(studios) {
     	db.setItem("studios", JSON.stringify(studios));
     };
 
     return {
-    	initialize: initialize,
-    	getStudios: getStudiosFromLocalStorage,
-    	sync: sync,
-    	clear: clear
+        initialize: initialize
     }
 })();
 

@@ -405,6 +405,10 @@ nav a:hover {
     z-index:88;
 }
 
+.main ul li:last-child {
+    border-bottom:0px;
+}
+
 .main {
     margin-top: 60px;
 }
