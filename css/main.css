@@ -401,3 +401,11 @@ nav a:hover {
     padding:1em;
     border-bottom:1px solid #ccc;
 }
+
+.main ul {
+    margin-top: 60px;
+}
+
+.header-container {
+    position:fixed;margin-bottom:100px;top:0px;left:0px;right:0px;
+}
