@@ -402,13 +402,37 @@ nav a:hover {
     border-bottom:1px solid #ccc;
     margin-left:-40px;
     width: 100%;
+    z-index:88;
 }
 
-.main ul {
+.main {
     margin-top: 60px;
-
 }
 
 .header-container {
-    position:fixed;margin-bottom:100px;top:0px;left:0px;right:0px;
+    position:fixed;    
+    top:0px;
+    left:0px;
+    right:0px;
+}
+
+.footer-container {
+    position:fixed;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    height:2%;
+}
+
+.header-container nav {
+    width:60%;
+    float:right;
+    z-index:99;
+}
+
+.header-container nav li a {
+   width:25%;
+   float:right;
+   padding:15px;
+   margin-right:10px;
 }

@@ -1,41 +1,43 @@
 var App = (function(){
+    var db = localStorage;
+    var initialized = false;
 
-	var db = localStorage;
-	var initialized = false;
-
-	function initialize() {	
-		if (!initialized){			
+    function initialize() {	
+        if (!initialized){			
             setupListView();
             bindEvents()
             populateStudiosList( getStudios() );
-		}
-		initialized = true;
-	}
+        } 
+        initialized = true;
+    }
 
     function setupListView() {
         var ListItemView = function(){
             this.el = $("<li/>");
-        }
+        };
+
         var ListView = function(el){
             this.el = $(el);
-        }   
+        }; 
 
         ListView.prototype.refreshList = function(studios){ 
             listView = this;
             listView.el.html('');
             listView.el.hide();
-        
-            $.each(studios,function(i,studio){
+            listView.addItems(studios);
+            listView.el.fadeIn('slow');
+        };
+
+        ListView.prototype.addItems = function(items) {
+            listView = this;
+            $.each(items,function(i,item){
                 var listItemView = new ListItemView();
-                listItemView.el.html(studio.title); 
+                listItemView.el.html(item.title); 
                 listView.el.append(listItemView.el);
             });
-    
-            listView.el.fadeIn('slow');
-        }
+        };
 
         studiosListView = new ListView(".main ul"); 
-
     }
 
     function bindEvents() {
@@ -43,9 +45,9 @@ var App = (function(){
         $("a#clear").on('click',clear);        
     }
 
-	function resetDb() {
-		db.setItem("studios", JSON.stringify({ studios: [] }));
-	}
+    function resetDb() {
+    	db.setItem("studios", JSON.stringify({ studios: [] }));
+    }
 
     function populateStudiosList(studios) {
         studiosListView.refreshList( studios );
@@ -55,33 +57,33 @@ var App = (function(){
         studiosListView.refreshList(getStudios().studios);    
     }
     
-	function getStudios() {
-		return JSON.parse(db.getItem("studios")) || [];
-	}
+    function getStudios() {
+    	return JSON.parse(db.getItem("studios")) || [];
+    }
 
-	function addStudiosToLocalStorage(studios) {
-		db.setItem("studios", JSON.stringify(studios));
-	};
+    function addStudiosToLocalStorage(studios) {
+    	db.setItem("studios", JSON.stringify(studios));
+    };
 
-	function sync() { 
-		var url = "http://yoga-now-api.herokuapp.com/studios.json"
-		$.getJSON(url, function(studios){		
-			addStudiosToLocalStorage(studios);
-			populateStudiosList(studios);
-		});	
-	}
+    function sync() { 
+    	var url = "http://yoga-now-api.herokuapp.com/studios.json"
+    	$.getJSON(url, function(studios){		
+    		addStudiosToLocalStorage(studios);
+    		populateStudiosList(studios);
+    	});	
+    }
 
-	function clear() {
-		resetDb();
-		populateStudiosListFromLocalStorage();
-	}
+    function clear() {
+    	resetDb();
+    	populateStudiosListFromLocalStorage();
+    }
 
-	return {
-		initialize: initialize,
-		getStudios: getStudios,
-		sync: sync,
-		clear: clear
-	}
+    return {
+    	initialize: initialize,
+    	getStudios: getStudios,
+    	sync: sync,
+    	clear: clear
+    }
 })();
 
 
