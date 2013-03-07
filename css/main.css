@@ -400,10 +400,13 @@ nav a:hover {
     list-style: none;
     padding:1em;
     border-bottom:1px solid #ccc;
+    margin-left:-40px;
+    width: 100%;
 }
 
 .main ul {
     margin-top: 60px;
+
 }
 
 .header-container {

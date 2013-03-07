@@ -28,7 +28,7 @@
                         <li><a style="width:25%;float:right;padding:15px;margin-right:10px"id="clear" href="#">Clear</a></li>                        
                     </ul>
                 </nav>
-                <h1 class="title">MyApp</h1>
+                <h1 class="title">Yoga</h1>
 
             </header>
         </div>
@@ -36,7 +36,7 @@
         <div class="main-container">
             <div class="main wrapper clearfix">
                 <section>
-                    <article>
+                    <article>                    
                         <ul></ul>
                     </article>
                 </section>
@@ -44,7 +44,7 @@
         </div> <!-- #main-container -->
 
         <div style="position:fixed;bottom:0px;left:0px;right:0px;" class="footer-container">
-            <footer class="wrapper">
+            <footer class="wrapper">                
             </footer>
         </div>
 
@@ -57,14 +57,7 @@
             $(function(){
 
                 App.initialize();
-                
-                $("a#sync").on('click',function(){
-                    App.sync();
-                });
 
-                $("a#clear").on('click',function(){
-                    App.clear();
-                });
             });
         </script>
 
